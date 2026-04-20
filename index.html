@@ -7,6 +7,12 @@
   <meta name="theme-color" content="#08101e" />
   <meta name="color-scheme" content="dark" />
 
+  <!-- DRAFT MODE: Keep this site out of search engines, translators, archives.
+       Remove all three meta lines below when going public. -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <meta name="bingbot" content="noindex, nofollow" />
+
   <title>Nerds, Creatives &amp; Dreamers · Berlin · April 17, 2026</title>
 
   <!-- Open Graph -->
@@ -123,6 +129,45 @@
       position: fixed; inset: 0; pointer-events: none; z-index: 1;
       opacity: 0.035; mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+
+    /* ============================================================
+       DRAFT BANNER — remove this entire CSS block when going public.
+       ============================================================ */
+    .draft-banner {
+      position: relative; z-index: 10;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(232, 132, 74, 0.08) 0 10px,
+          rgba(232, 132, 74, 0.02) 10px 20px
+        ),
+        var(--bg-1);
+      border-bottom: 1px solid rgba(232, 132, 74, 0.35);
+      font-family: var(--f-mono);
+      font-size: 0.78rem;
+      color: var(--ink-2);
+    }
+    .draft-banner-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0.65rem var(--pad-x);
+      display: flex; align-items: center; gap: 0.9rem;
+      flex-wrap: wrap; justify-content: center;
+      text-align: center;
+    }
+    .draft-tag {
+      font-weight: 700; letter-spacing: 0.22em;
+      background: var(--orange); color: var(--bg-0);
+      padding: 0.15rem 0.55rem; border-radius: 3px;
+      font-size: 0.72rem; flex-shrink: 0;
+    }
+    .draft-text {
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+    @media (max-width: 520px) {
+      .draft-banner-inner { gap: 0.6rem; padding: 0.7rem 1rem; }
+      .draft-text { font-size: 0.72rem; }
     }
 
     /* Dotted brand bar */
@@ -515,6 +560,19 @@
 </head>
 <body>
 
+  <!-- ============================================================
+       DRAFT BANNER — remove this entire section when going public.
+       Also remove the robots meta tags in the head.
+       ============================================================ -->
+  <aside class="draft-banner" role="note" aria-label="Draft notice">
+    <div class="draft-banner-inner">
+      <span class="draft-tag">DRAFT</span>
+      <span class="draft-text">
+        Design preview — internal review only, please don't share publicly.
+      </span>
+    </div>
+  </aside>
+
   <div class="bg-atmosphere" aria-hidden="true"></div>
   <div class="bg-grain" aria-hidden="true"></div>
   <div class="dot-bar" aria-hidden="true"></div>
@@ -668,11 +726,17 @@
     <div class="site-foot-mark">Nerds, Creatives &amp; Dreamers</div>
     <div class="site-foot-line">Berlin · First Edition · April 2026</div>
     <div class="site-foot-small">Built with curiosity &amp; respect.</div>
+    <!--
+      DRAFT MODE: Impressum/Datenschutz buttons disabled until real data is filled in.
+      To re-enable on launch, remove the two HTML comment markers around the nav element below.
+    -->
+    <!--
     <nav class="site-foot-legal">
-      <button type="button" class="legal-link" data-open="impressum">Impressum</button>
+      <button type="button" class="legal-link" data-open="impressum">Imprint</button>
       <span aria-hidden="true">·</span>
-      <button type="button" class="legal-link" data-open="datenschutz">Datenschutz</button>
+      <button type="button" class="legal-link" data-open="datenschutz">Privacy</button>
     </nav>
+    -->
   </footer>
 
   <!-- ============================================================
@@ -684,71 +748,71 @@
 
   <dialog id="dialog-impressum" class="legal-dialog" aria-labelledby="impressum-title">
     <div class="legal-dialog-inner">
-      <button type="button" class="legal-close" aria-label="Schließen" data-close>×</button>
+      <button type="button" class="legal-close" aria-label="Close" data-close>×</button>
       <div class="legal-content">
-        <h2 id="impressum-title">Impressum</h2>
+        <h2 id="impressum-title">Imprint</h2>
 
-        <p class="legal-lede">Angaben zum Verantwortlichen für die Inhalte dieser Website.</p>
+        <p class="legal-lede">Legal information about the operator of this website, as required under German law (§ 5 DDG).</p>
 
-        <h3>Betreiber</h3>
+        <h3>Operator</h3>
         <p>
-          [DEIN VORNAME NACHNAME]<br />
-          [STRASSE HAUSNUMMER]<br />
-          [PLZ ORT]<br />
-          Deutschland
+          [YOUR FIRST NAME LAST NAME]<br />
+          [STREET AND NUMBER]<br />
+          [POSTAL CODE CITY]<br />
+          Germany
         </p>
 
-        <h3>Kontakt</h3>
+        <h3>Contact</h3>
         <p>
-          E-Mail: <a href="mailto:[DEINE@EMAIL.DE]">[DEINE@EMAIL.DE]</a>
+          Email: <a href="mailto:[YOUR@EMAIL.DE]">[YOUR@EMAIL.DE]</a>
         </p>
 
-        <h3>Verantwortlich für den Inhalt</h3>
-        <p>[DEIN VORNAME NACHNAME], Anschrift wie oben.</p>
+        <h3>Responsible for content</h3>
+        <p>[YOUR FIRST NAME LAST NAME], address as above.</p>
 
-        <h3>Haftung für Inhalte</h3>
-        <p>Die Inhalte dieser Seite wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden. Als Diensteanbieter bin ich für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Ich bin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+        <h3>Liability for content</h3>
+        <p>The content of this website has been created with care. However, no guarantee can be given for the accuracy, completeness, or timeliness of the content. As a service provider, I am responsible for my own content on these pages in accordance with general laws. I am not, however, obligated to monitor transmitted or stored external information or to investigate circumstances that indicate illegal activity.</p>
 
-        <h3>Haftung für Links</h3>
-        <p>Diese Website enthält Links zu externen Websites Dritter (z.&nbsp;B. Luma, Meetup, Instagram, WhatsApp), auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+        <h3>Liability for external links</h3>
+        <p>This website contains links to external third-party websites (e.g. Luma, Meetup, Instagram, WhatsApp). I have no influence over the content of those sites and therefore cannot assume any responsibility for them. The respective provider or operator of the linked pages is always responsible for their content.</p>
 
-        <h3>Urheberrecht</h3>
-        <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Das Logo "Nerds, Creatives &amp; Dreamers" ist durch Urheberrecht geschützt.</p>
+        <h3>Copyright</h3>
+        <p>The content and works created by the site operator on these pages are subject to German copyright law. The "Nerds, Creatives &amp; Dreamers" logo is protected by copyright.</p>
       </div>
     </div>
   </dialog>
 
   <dialog id="dialog-datenschutz" class="legal-dialog" aria-labelledby="datenschutz-title">
     <div class="legal-dialog-inner">
-      <button type="button" class="legal-close" aria-label="Schließen" data-close>×</button>
+      <button type="button" class="legal-close" aria-label="Close" data-close>×</button>
       <div class="legal-content">
-        <h2 id="datenschutz-title">Datenschutzerklärung</h2>
+        <h2 id="datenschutz-title">Privacy Policy</h2>
 
-        <p class="legal-lede">Diese Website speichert keine Besucherdaten, verwendet keine Cookies und setzt keine Tracker ein. Technisch unvermeidbare Datenverarbeitung passiert ausschließlich beim Hoster.</p>
+        <p class="legal-lede">This website stores no visitor data, uses no cookies, and embeds no trackers. Technically unavoidable data processing happens only at the hosting provider.</p>
 
-        <h3>1. Verantwortlicher</h3>
+        <h3>1. Controller</h3>
         <p>
-          [DEIN VORNAME NACHNAME]<br />
-          [STRASSE HAUSNUMMER], [PLZ ORT]<br />
-          E-Mail: <a href="mailto:[DEINE@EMAIL.DE]">[DEINE@EMAIL.DE]</a>
+          [YOUR FIRST NAME LAST NAME]<br />
+          [STREET AND NUMBER], [POSTAL CODE CITY]<br />
+          Email: <a href="mailto:[YOUR@EMAIL.DE]">[YOUR@EMAIL.DE]</a>
         </p>
 
         <h3>2. Hosting</h3>
-        <p>Diese Website wird bei <strong>GitHub Pages</strong> (GitHub, Inc., 88 Colin P Kelly Jr Street, San Francisco, CA 94107, USA) gehostet. Beim Aufruf der Seite überträgt dein Browser technisch notwendige Daten an die Server von GitHub:</p>
+        <p>This website is hosted on <strong>GitHub Pages</strong> (GitHub, Inc., 88 Colin P Kelly Jr Street, San Francisco, CA 94107, USA). When you visit this site, your browser transmits technically necessary data to GitHub's servers:</p>
         <ul>
-          <li>IP-Adresse</li>
-          <li>Datum und Uhrzeit des Zugriffs</li>
-          <li>Aufgerufene URL</li>
-          <li>Browser-Typ und -Version (User-Agent)</li>
-          <li>Gegebenenfalls Referrer-URL (von welcher Seite du kamst)</li>
+          <li>IP address</li>
+          <li>Date and time of access</li>
+          <li>Requested URL</li>
+          <li>Browser type and version (user-agent)</li>
+          <li>Where applicable, referrer URL (the page you came from)</li>
         </ul>
-        <p>Diese Daten werden in Server-Logs bei GitHub verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren, funktionierenden Bereitstellung der Website). GitHub verarbeitet Daten gegebenenfalls in den USA; Grundlage ist das EU-U.S. Data Privacy Framework. Details zum Datenschutz bei GitHub Pages: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.</p>
+        <p>This data is processed in GitHub's server logs. Legal basis is Art. 6 (1)(f) GDPR (legitimate interest in securely and reliably providing the website). GitHub may process data in the United States on the basis of the EU–U.S. Data Privacy Framework. Details: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.</p>
 
-        <h3>3. Keine Cookies, kein Tracking</h3>
-        <p>Diese Website setzt keine Cookies, verwendet keinen LocalStorage, bindet kein Analytics (Google Analytics, Matomo etc.) ein und lädt keine Schriftarten oder Skripte von externen Servern. Die gesamte Seite läuft lokal im Browser.</p>
+        <h3>3. No cookies, no tracking</h3>
+        <p>This website sets no cookies, uses no localStorage, embeds no analytics (Google Analytics, Matomo, etc.), and loads no fonts or scripts from external servers. The entire page runs locally in your browser.</p>
 
-        <h3>4. Externe Links</h3>
-        <p>Diese Website verlinkt auf externe Dienste (Luma, Meetup, Instagram, WhatsApp). Erst wenn du einen dieser Links aktiv anklickst, wirst du zu dem jeweiligen Anbieter weitergeleitet und es gelten dort die Datenschutzbestimmungen des jeweiligen Dienstes:</p>
+        <h3>4. External links</h3>
+        <p>This website links to external services (Luma, Meetup, Instagram, WhatsApp). Only when you actively click one of these links are you forwarded to the respective provider, and their own privacy terms apply:</p>
         <ul>
           <li><a href="https://lu.ma/privacy" target="_blank" rel="noopener">Luma — Privacy Policy</a></li>
           <li><a href="https://www.meetup.com/privacy/" target="_blank" rel="noopener">Meetup — Privacy Policy</a></li>
@@ -756,14 +820,14 @@
           <li><a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">WhatsApp — Privacy Policy</a></li>
         </ul>
 
-        <h3>5. Kalenderdownload</h3>
-        <p>Der "Add to calendar"-Button erzeugt eine <code>.ics</code>-Datei ausschließlich lokal in deinem Browser. Es werden dabei keine Daten an den Server gesendet.</p>
+        <h3>5. Calendar download</h3>
+        <p>The "Add to calendar" button generates an <code>.ics</code> file entirely in your browser. No data is sent to any server during this process.</p>
 
-        <h3>6. Deine Rechte</h3>
-        <p>Du hast nach der DSGVO das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Für Anfragen kontaktiere mich unter der oben genannten E-Mail-Adresse.</p>
-        <p>Zusätzlich hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Für Berlin zuständig: <a href="https://www.datenschutz-berlin.de/" target="_blank" rel="noopener">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a>.</p>
+        <h3>6. Your rights</h3>
+        <p>Under the GDPR you have the right to access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction of processing (Art. 18), data portability (Art. 20), and objection (Art. 21). For any request, please contact the email address listed above.</p>
+        <p>You also have the right to lodge a complaint with a data protection supervisory authority. For Berlin, the competent authority is the <a href="https://www.datenschutz-berlin.de/" target="_blank" rel="noopener">Berlin Commissioner for Data Protection and Freedom of Information</a>.</p>
 
-        <p class="legal-updated">Stand: April 2026</p>
+        <p class="legal-updated">Last updated: April 2026</p>
       </div>
     </div>
   </dialog>

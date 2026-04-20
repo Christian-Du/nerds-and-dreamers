@@ -29,37 +29,7 @@
   <link rel="icon" href="./assets/logo.png" type="image/png" />
   <link rel="apple-touch-icon" href="./assets/logo.png" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet" />
-
-  <style>
-    /* JetBrains Mono Nerd Font — loaded from jsDelivr as progressive enhancement.
-       If the CDN fails for any reason, we fall back silently to Google Fonts' JetBrains Mono
-       (already loaded above) — visually identical for all regular text characters. */
-    @font-face {
-      font-family: 'JetBrainsMono Nerd Font';
-      src: url('https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.2.1/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf') format('truetype');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'JetBrainsMono Nerd Font';
-      src: url('https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.2.1/patched-fonts/JetBrainsMono/Ligatures/Bold/JetBrainsMonoNerdFont-Bold.ttf') format('truetype');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'JetBrainsMono Nerd Font';
-      src: url('https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.2.1/patched-fonts/JetBrainsMono/Ligatures/Italic/JetBrainsMonoNerdFont-Italic.ttf') format('truetype');
-      font-weight: 400;
-      font-style: italic;
-      font-display: swap;
-    }
-  </style>
+  <!-- No external fonts — we use the system monospace stack for DSGVO compliance -->
 
   <!-- JSON-LD Event -->
   <script type="application/ld+json">
@@ -109,9 +79,9 @@
       --orange-deep: #d96527;
       --orange-glow: rgba(232, 132, 74, 0.22);
       --green: #7bc97a;
-      --f-display: 'JetBrainsMono Nerd Font', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-      --f-body:    'JetBrainsMono Nerd Font', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-      --f-mono:    'JetBrainsMono Nerd Font', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --f-display: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      --f-body:    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+      --f-mono:    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
       --max-w: 1040px;
       --pad-x: clamp(1.25rem, 4vw, 2.5rem);
       --gap-section: clamp(4.5rem, 10vw, 7.5rem);
@@ -424,6 +394,110 @@
     .site-foot-line { font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-4); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
     .site-foot-small { font-size: 0.78rem; color: var(--ink-4); font-style: italic; font-family: var(--f-display); }
 
+    /* Footer legal links */
+    .site-foot-legal {
+      margin-top: 1.25rem; display: flex; justify-content: center; align-items: center;
+      gap: 0.6rem; font-family: var(--f-mono); font-size: 0.75rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .site-foot-legal span { color: var(--ink-4); }
+    .legal-link {
+      background: none; border: none; padding: 0; cursor: pointer;
+      color: var(--ink-3); font: inherit; text-transform: inherit; letter-spacing: inherit;
+      transition: color 0.2s ease;
+    }
+    .legal-link:hover, .legal-link:focus-visible { color: var(--orange); }
+    .legal-link:focus-visible {
+      outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px;
+    }
+
+    /* Legal dialog (<dialog> element) */
+    .legal-dialog {
+      border: none; padding: 0; background: transparent;
+      width: min(680px, 92vw); max-height: 88vh;
+      margin: auto;
+      border-radius: var(--radius); overflow: hidden;
+      color: var(--ink-2);
+    }
+    .legal-dialog::backdrop {
+      background: rgba(5, 9, 18, 0.82);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .legal-dialog[open] {
+      animation: dialogIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes dialogIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .legal-dialog[open] { animation: none; }
+    }
+    .legal-dialog-inner {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      max-height: 88vh; overflow-y: auto;
+      position: relative;
+      /* Prevent scroll chaining to the page */
+      overscroll-behavior: contain;
+    }
+    .legal-close {
+      position: sticky; top: 0.75rem; float: right; margin-right: 0.75rem; margin-top: 0.75rem;
+      z-index: 2;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--bg-2); border: 1px solid var(--line);
+      color: var(--ink-2); font-size: 1.3rem; line-height: 1; cursor: pointer;
+      display: grid; place-items: center;
+      transition: all 0.2s ease;
+    }
+    .legal-close:hover {
+      background: var(--bg-0); color: var(--orange); border-color: var(--orange);
+    }
+    .legal-content {
+      padding: 2rem clamp(1.25rem, 4vw, 2.25rem) 2.5rem;
+    }
+    .legal-content h2 {
+      font-family: var(--f-display); font-size: clamp(1.5rem, 4vw, 1.9rem);
+      font-weight: 700; color: var(--ink-1); margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .legal-content h3 {
+      font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--orange); margin: 2rem 0 0.75rem;
+      padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
+    }
+    .legal-content p, .legal-content ul {
+      font-size: 0.95rem; line-height: 1.65; color: var(--ink-2);
+      margin-bottom: 0.9rem;
+    }
+    .legal-content ul { padding-left: 1.25rem; list-style: disc; }
+    .legal-content ul li { margin-bottom: 0.3rem; }
+    .legal-content a {
+      color: var(--blue); text-decoration: underline; text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+    }
+    .legal-content a:hover { color: var(--orange); }
+    .legal-content code {
+      font-family: var(--f-mono); font-size: 0.85em;
+      background: var(--bg-0); padding: 0.1em 0.4em; border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+    .legal-content strong { color: var(--ink-1); font-weight: 600; }
+    .legal-lede {
+      font-family: var(--f-display); font-style: italic;
+      color: var(--ink-3); padding: 1rem 1.25rem;
+      background: var(--bg-2); border-left: 2px solid var(--orange);
+      border-radius: 0 6px 6px 0; margin: 1rem 0 0 !important;
+    }
+    .legal-updated {
+      margin-top: 2.5rem !important;
+      font-family: var(--f-mono); font-size: 0.75rem;
+      color: var(--ink-4); text-align: right;
+    }
+
     /* Entry animations */
     .fade-up { opacity: 0; transform: translateY(14px); animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .fade-up:nth-child(1) { animation-delay: 0.05s; }
@@ -594,7 +668,105 @@
     <div class="site-foot-mark">Nerds, Creatives &amp; Dreamers</div>
     <div class="site-foot-line">Berlin · First Edition · April 2026</div>
     <div class="site-foot-small">Built with curiosity &amp; respect.</div>
+    <nav class="site-foot-legal">
+      <button type="button" class="legal-link" data-open="impressum">Impressum</button>
+      <span aria-hidden="true">·</span>
+      <button type="button" class="legal-link" data-open="datenschutz">Datenschutz</button>
+    </nav>
   </footer>
+
+  <!-- ============================================================
+       LEGAL DIALOGS — Impressum & Datenschutz
+       Both use the native <dialog> element for accessibility.
+       Opened via the footer buttons, closed via ESC, overlay click, or the X button.
+       Deep-linking works: visit /#impressum or /#datenschutz to auto-open.
+       ============================================================ -->
+
+  <dialog id="dialog-impressum" class="legal-dialog" aria-labelledby="impressum-title">
+    <div class="legal-dialog-inner">
+      <button type="button" class="legal-close" aria-label="Schließen" data-close>×</button>
+      <div class="legal-content">
+        <h2 id="impressum-title">Impressum</h2>
+
+        <p class="legal-lede">Angaben zum Verantwortlichen für die Inhalte dieser Website.</p>
+
+        <h3>Betreiber</h3>
+        <p>
+          [DEIN VORNAME NACHNAME]<br />
+          [STRASSE HAUSNUMMER]<br />
+          [PLZ ORT]<br />
+          Deutschland
+        </p>
+
+        <h3>Kontakt</h3>
+        <p>
+          E-Mail: <a href="mailto:[DEINE@EMAIL.DE]">[DEINE@EMAIL.DE]</a>
+        </p>
+
+        <h3>Verantwortlich für den Inhalt</h3>
+        <p>[DEIN VORNAME NACHNAME], Anschrift wie oben.</p>
+
+        <h3>Haftung für Inhalte</h3>
+        <p>Die Inhalte dieser Seite wurden mit Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden. Als Diensteanbieter bin ich für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Ich bin jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+
+        <h3>Haftung für Links</h3>
+        <p>Diese Website enthält Links zu externen Websites Dritter (z.&nbsp;B. Luma, Meetup, Instagram, WhatsApp), auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+
+        <h3>Urheberrecht</h3>
+        <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Das Logo "Nerds, Creatives &amp; Dreamers" ist durch Urheberrecht geschützt.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="dialog-datenschutz" class="legal-dialog" aria-labelledby="datenschutz-title">
+    <div class="legal-dialog-inner">
+      <button type="button" class="legal-close" aria-label="Schließen" data-close>×</button>
+      <div class="legal-content">
+        <h2 id="datenschutz-title">Datenschutzerklärung</h2>
+
+        <p class="legal-lede">Diese Website speichert keine Besucherdaten, verwendet keine Cookies und setzt keine Tracker ein. Technisch unvermeidbare Datenverarbeitung passiert ausschließlich beim Hoster.</p>
+
+        <h3>1. Verantwortlicher</h3>
+        <p>
+          [DEIN VORNAME NACHNAME]<br />
+          [STRASSE HAUSNUMMER], [PLZ ORT]<br />
+          E-Mail: <a href="mailto:[DEINE@EMAIL.DE]">[DEINE@EMAIL.DE]</a>
+        </p>
+
+        <h3>2. Hosting</h3>
+        <p>Diese Website wird bei <strong>GitHub Pages</strong> (GitHub, Inc., 88 Colin P Kelly Jr Street, San Francisco, CA 94107, USA) gehostet. Beim Aufruf der Seite überträgt dein Browser technisch notwendige Daten an die Server von GitHub:</p>
+        <ul>
+          <li>IP-Adresse</li>
+          <li>Datum und Uhrzeit des Zugriffs</li>
+          <li>Aufgerufene URL</li>
+          <li>Browser-Typ und -Version (User-Agent)</li>
+          <li>Gegebenenfalls Referrer-URL (von welcher Seite du kamst)</li>
+        </ul>
+        <p>Diese Daten werden in Server-Logs bei GitHub verarbeitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren, funktionierenden Bereitstellung der Website). GitHub verarbeitet Daten gegebenenfalls in den USA; Grundlage ist das EU-U.S. Data Privacy Framework. Details zum Datenschutz bei GitHub Pages: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.</p>
+
+        <h3>3. Keine Cookies, kein Tracking</h3>
+        <p>Diese Website setzt keine Cookies, verwendet keinen LocalStorage, bindet kein Analytics (Google Analytics, Matomo etc.) ein und lädt keine Schriftarten oder Skripte von externen Servern. Die gesamte Seite läuft lokal im Browser.</p>
+
+        <h3>4. Externe Links</h3>
+        <p>Diese Website verlinkt auf externe Dienste (Luma, Meetup, Instagram, WhatsApp). Erst wenn du einen dieser Links aktiv anklickst, wirst du zu dem jeweiligen Anbieter weitergeleitet und es gelten dort die Datenschutzbestimmungen des jeweiligen Dienstes:</p>
+        <ul>
+          <li><a href="https://lu.ma/privacy" target="_blank" rel="noopener">Luma — Privacy Policy</a></li>
+          <li><a href="https://www.meetup.com/privacy/" target="_blank" rel="noopener">Meetup — Privacy Policy</a></li>
+          <li><a href="https://privacycenter.instagram.com/policy" target="_blank" rel="noopener">Instagram / Meta — Privacy Policy</a></li>
+          <li><a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">WhatsApp — Privacy Policy</a></li>
+        </ul>
+
+        <h3>5. Kalenderdownload</h3>
+        <p>Der "Add to calendar"-Button erzeugt eine <code>.ics</code>-Datei ausschließlich lokal in deinem Browser. Es werden dabei keine Daten an den Server gesendet.</p>
+
+        <h3>6. Deine Rechte</h3>
+        <p>Du hast nach der DSGVO das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch (Art. 21). Für Anfragen kontaktiere mich unter der oben genannten E-Mail-Adresse.</p>
+        <p>Zusätzlich hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Für Berlin zuständig: <a href="https://www.datenschutz-berlin.de/" target="_blank" rel="noopener">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a>.</p>
+
+        <p class="legal-updated">Stand: April 2026</p>
+      </div>
+    </div>
+  </dialog>
 
   <script>
     (function () {
@@ -684,6 +856,73 @@
           setTimeout(function () { URL.revokeObjectURL(url); }, 500);
         });
       }
+
+      /* ---------- Legal dialogs (Impressum / Datenschutz) ---------- */
+      var dialogs = {
+        impressum:   document.getElementById('dialog-impressum'),
+        datenschutz: document.getElementById('dialog-datenschutz')
+      };
+
+      function openDialog(name) {
+        var d = dialogs[name];
+        if (!d) return;
+        if (typeof d.showModal === 'function') {
+          d.showModal();
+        } else {
+          // Fallback for very old browsers
+          d.setAttribute('open', '');
+        }
+        // Reset inner scroll to top on open
+        var inner = d.querySelector('.legal-dialog-inner');
+        if (inner) inner.scrollTop = 0;
+      }
+
+      function closeDialog(d) {
+        if (!d) return;
+        if (typeof d.close === 'function') {
+          d.close();
+        } else {
+          d.removeAttribute('open');
+        }
+      }
+
+      // Footer buttons
+      var triggers = document.querySelectorAll('[data-open]');
+      for (var i = 0; i < triggers.length; i++) {
+        (function (btn) {
+          btn.addEventListener('click', function () {
+            openDialog(btn.getAttribute('data-open'));
+          });
+        })(triggers[i]);
+      }
+
+      // Close buttons
+      var closers = document.querySelectorAll('[data-close]');
+      for (var j = 0; j < closers.length; j++) {
+        (function (btn) {
+          btn.addEventListener('click', function () {
+            closeDialog(btn.closest('dialog'));
+          });
+        })(closers[j]);
+      }
+
+      // Click on backdrop closes the dialog
+      Object.keys(dialogs).forEach(function (key) {
+        var d = dialogs[key];
+        if (!d) return;
+        d.addEventListener('click', function (e) {
+          // Clicking the dialog element itself (not its children) = backdrop
+          if (e.target === d) closeDialog(d);
+        });
+      });
+
+      // Deep-linking: #impressum or #datenschutz auto-opens
+      function handleHash() {
+        var h = (window.location.hash || '').replace('#', '');
+        if (dialogs[h]) openDialog(h);
+      }
+      handleHash();
+      window.addEventListener('hashchange', handleHash);
     })();
   </script>
 </body>

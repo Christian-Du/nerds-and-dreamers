@@ -328,6 +328,121 @@
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } }
     @media (prefers-reduced-motion: reduce) { .config-body .status-dot { animation: none; } }
 
+    /* ---------- UPCOMING EDITIONS ---------- */
+    .upcoming-heading {
+      font-family: var(--f-display); font-size: clamp(1.75rem, 4.5vw, 2.4rem);
+      font-weight: 700; line-height: 1.15; letter-spacing: -0.02em;
+      color: var(--ink-1); margin-bottom: 0.65rem;
+    }
+    .upcoming-heading em {
+      font-style: italic; font-weight: 500; color: var(--orange);
+    }
+    .upcoming-intro {
+      color: var(--ink-3); font-size: 0.98rem;
+      margin-bottom: 2rem; max-width: 55ch;
+    }
+    .upcoming-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 640px) { .upcoming-grid { grid-template-columns: 1fr; } }
+
+    .upcoming-card {
+      position: relative; overflow: hidden;
+      padding: 1.75rem;
+      background: var(--bg-1); border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+      display: grid; gap: 1.1rem;
+      grid-template-areas:
+        "tag  tag"
+        "date meta"
+        "body body";
+      grid-template-columns: auto 1fr;
+      align-items: center;
+    }
+    .upcoming-card:hover {
+      border-color: var(--orange); transform: translateY(-2px);
+      background: linear-gradient(180deg, rgba(232,132,74,0.04) 0%, var(--bg-1) 60%);
+    }
+    /* Subtle orange corner glow to echo "in-progress" vibe */
+    .upcoming-card::before {
+      content: ""; position: absolute; top: -60%; right: -60%;
+      width: 90%; height: 90%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,132,74,0.18), transparent 70%);
+      filter: blur(30px); pointer-events: none;
+      opacity: 0.5; transition: opacity 0.3s ease;
+    }
+    .upcoming-card:hover::before { opacity: 1; }
+
+    .upcoming-tag {
+      grid-area: tag;
+      justify-self: start;
+      font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange);
+      padding: 0.25rem 0.55rem;
+      background: rgba(232, 132, 74, 0.1);
+      border: 1px solid rgba(232, 132, 74, 0.3);
+      border-radius: 3px;
+    }
+
+    .upcoming-date {
+      grid-area: date;
+      display: flex; flex-direction: column; align-items: center;
+      min-width: 72px;
+      padding: 0.65rem 0.9rem;
+      background: var(--bg-0); border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      line-height: 1;
+    }
+    .upcoming-month {
+      font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 0.35rem;
+    }
+    .upcoming-day {
+      font-family: var(--f-display); font-size: 2rem; font-weight: 700;
+      color: var(--ink-1); letter-spacing: -0.03em;
+    }
+
+    .upcoming-meta {
+      grid-area: meta;
+      display: flex; flex-direction: column; gap: 0.2rem;
+    }
+    .upcoming-edition {
+      font-family: var(--f-display); font-size: 1.15rem; font-weight: 700;
+      color: var(--ink-1); letter-spacing: -0.01em;
+    }
+    .upcoming-time {
+      font-family: var(--f-mono); font-size: 0.82rem;
+      color: var(--ink-3);
+    }
+
+    .upcoming-body { grid-area: body; }
+    .upcoming-config {
+      display: block;
+      font-family: var(--f-mono); font-size: 0.82rem; line-height: 1.75;
+      padding: 0.85rem 1rem;
+      background: var(--bg-0); border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      color: var(--ink-3);
+      white-space: pre-wrap;
+    }
+    .upcoming-config .c-k { color: var(--blue); }
+    .upcoming-config .c-v { color: var(--ink-2); }
+
+    .upcoming-foot {
+      margin-top: 1.75rem;
+      font-family: var(--f-mono); font-size: 0.82rem;
+      color: var(--ink-4);
+    }
+    .upcoming-foot a {
+      color: var(--orange); text-decoration: underline;
+      text-underline-offset: 3px; text-decoration-thickness: 1px;
+    }
+    .upcoming-foot a:hover { color: var(--ink-1); }
+
     /* Who */
     .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
     @media (max-width: 640px) { .who-grid { grid-template-columns: 1fr; } }
@@ -624,7 +739,68 @@
       </div>
     </header>
 
-    <section>
+    <!-- ============================================================
+         UPCOMING EDITIONS TEASER
+         Two tentative future dates. No RSVP links yet, just a signal
+         that the series continues. Update dates + year when confirmed.
+         ============================================================ -->
+    <section class="upcoming" aria-labelledby="upcoming-heading">
+      <div class="section-label">// what's next</div>
+      <h2 id="upcoming-heading" class="upcoming-heading">
+        The series <em>continues</em>.
+      </h2>
+      <p class="upcoming-intro">
+        Two more editions on the calendar. Dates are set — everything else is still unfolding.
+      </p>
+
+      <div class="upcoming-grid">
+
+        <article class="upcoming-card">
+          <span class="upcoming-tag">tentative</span>
+          <div class="upcoming-date" aria-hidden="true">
+            <span class="upcoming-month">Apr</span>
+            <span class="upcoming-day">09</span>
+          </div>
+          <div class="upcoming-meta">
+            <span class="upcoming-edition">Edition 02</span>
+            <span class="upcoming-time">15:00 – 17:00</span>
+          </div>
+          <div class="upcoming-body">
+            <code class="upcoming-config">
+              <span class="c-k">venue</span>: <span class="c-v">TBA</span><br />
+              <span class="c-k">theme</span>: <span class="c-v">coming soon</span><br />
+              <span class="c-k">rsvp</span>:  <span class="c-v">opens closer to the date</span>
+            </code>
+          </div>
+        </article>
+
+        <article class="upcoming-card">
+          <span class="upcoming-tag">tentative</span>
+          <div class="upcoming-date" aria-hidden="true">
+            <span class="upcoming-month">Apr</span>
+            <span class="upcoming-day">21</span>
+          </div>
+          <div class="upcoming-meta">
+            <span class="upcoming-edition">Edition 03</span>
+            <span class="upcoming-time">18:00 – 20:00</span>
+          </div>
+          <div class="upcoming-body">
+            <code class="upcoming-config">
+              <span class="c-k">venue</span>: <span class="c-v">TBA</span><br />
+              <span class="c-k">theme</span>: <span class="c-v">coming soon</span><br />
+              <span class="c-k">rsvp</span>:  <span class="c-v">opens closer to the date</span>
+            </code>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="upcoming-foot">
+        Want to hear when the next edition goes live? Follow us via one of the <a href="#connect">channels below</a>.
+      </p>
+    </section>
+
+    <section id="about">
       <div class="section-label">// 01 — about</div>
       <div class="prose">
         <p class="lead">Nerds, Creatives &amp; Dreamers is a small, curated evening in Berlin for two kinds of people who almost never end up in the same room: the ones who build things with code, and the ones who build things with imagination.</p>
@@ -692,7 +868,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="connect">
       <div class="section-label">// 05 — connect</div>
       <div class="links-grid">
         <a class="link-card link-card--primary" href="https://luma.com/0xehvknp" target="_blank" rel="noopener">

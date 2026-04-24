@@ -15,13 +15,15 @@
 
   <title>Nerds, Creatives &amp; Dreamers · Berlin · April 17, 2026</title>
 
-  <!-- Open Graph -->
+  <!-- Open Graph — absolute URLs are mandatory for social media crawlers -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://christian-du.github.io/nerds-and-dreamers/" />
   <meta property="og:title" content="Nerds, Creatives &amp; Dreamers" />
   <meta property="og:description" content="Where code meets canvas. A small Berlin gathering for builders and creators." />
-  <meta property="og:image" content="./assets/og-image.png" />
+  <meta property="og:image" content="https://christian-du.github.io/nerds-and-dreamers/assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Nerds, Creatives &amp; Dreamers — Berlin meetup where code meets canvas." />
   <meta property="og:site_name" content="Nerds, Creatives &amp; Dreamers" />
   <meta property="og:locale" content="en_US" />
 
@@ -29,7 +31,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Nerds, Creatives &amp; Dreamers" />
   <meta name="twitter:description" content="Where code meets canvas. A small Berlin gathering for builders and creators." />
-  <meta name="twitter:image" content="./assets/og-image.png" />
+  <meta name="twitter:image" content="https://christian-du.github.io/nerds-and-dreamers/assets/og-image.png" />
+  <meta name="twitter:image:alt" content="Nerds, Creatives &amp; Dreamers — Berlin meetup where code meets canvas." />
 
   <!-- Favicon inlined as data URI so the single-file site shows its icon without assets/ -->
   <link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,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" />
@@ -788,16 +791,19 @@
           <span class="link-card-name">Meetup</span>
           <span class="link-card-meta">meetup.com/nerds-creatives-dreamers</span>
         </a>
-        <a class="link-card" href="#REPLACE_WITH_INSTAGRAM_URL" target="_blank" rel="noopener">
+        <a class="link-card" href="https://www.instagram.com/nerds_creatives_dreamers" target="_blank" rel="noopener">
           <span class="link-card-tag">Follow</span>
           <span class="link-card-name">Instagram</span>
-          <span class="link-card-meta">Behind the scenes</span>
+          <span class="link-card-meta">@nerds_creatives_dreamers</span>
         </a>
+        <!-- WhatsApp group not yet live — will be added once the invite link exists.
+             To re-enable: remove the surrounding HTML comment markers.
         <a class="link-card" href="#REPLACE_WITH_WHATSAPP_URL" target="_blank" rel="noopener">
           <span class="link-card-tag">Chat</span>
           <span class="link-card-name">WhatsApp</span>
           <span class="link-card-meta">Real-time conversation</span>
         </a>
+        -->
       </div>
     </section>
 
@@ -833,25 +839,25 @@
 
         <h3>Operator</h3>
         <p>
-          [YOUR FIRST NAME LAST NAME]<br />
-          [STREET AND NUMBER]<br />
-          [POSTAL CODE CITY]<br />
+          Christian Duske<br />
+          Neustrelitzer Straße 60<br />
+          13055 Berlin<br />
           Germany
         </p>
 
         <h3>Contact</h3>
         <p>
-          Email: <a href="mailto:[YOUR@EMAIL.DE]">[YOUR@EMAIL.DE]</a>
+          Email: <a href="mailto:nerds-and-dreamers.c.regally292@passmail.net">nerds-and-dreamers.c.regally292@passmail.net</a>
         </p>
 
         <h3>Responsible for content</h3>
-        <p>[YOUR FIRST NAME LAST NAME], address as above.</p>
+        <p>Christian Duske, address as above.</p>
 
         <h3>Liability for content</h3>
         <p>The content of this website has been created with care. However, no guarantee can be given for the accuracy, completeness, or timeliness of the content. As a service provider, I am responsible for my own content on these pages in accordance with general laws. I am not, however, obligated to monitor transmitted or stored external information or to investigate circumstances that indicate illegal activity.</p>
 
         <h3>Liability for external links</h3>
-        <p>This website contains links to external third-party websites (e.g. Luma, Meetup, Instagram, WhatsApp). I have no influence over the content of those sites and therefore cannot assume any responsibility for them. The respective provider or operator of the linked pages is always responsible for their content.</p>
+        <p>This website contains links to external third-party websites (e.g. Luma, Meetup, Instagram). I have no influence over the content of those sites and therefore cannot assume any responsibility for them. The respective provider or operator of the linked pages is always responsible for their content.</p>
 
         <h3>Copyright</h3>
         <p>The content and works created by the site operator on these pages are subject to German copyright law. The "Nerds, Creatives &amp; Dreamers" logo is protected by copyright.</p>
@@ -869,9 +875,9 @@
 
         <h3>1. Controller</h3>
         <p>
-          [YOUR FIRST NAME LAST NAME]<br />
-          [STREET AND NUMBER], [POSTAL CODE CITY]<br />
-          Email: <a href="mailto:[YOUR@EMAIL.DE]">[YOUR@EMAIL.DE]</a>
+          Christian Duske<br />
+          Neustrelitzer Straße 60, 13055 Berlin<br />
+          Email: <a href="mailto:nerds-and-dreamers.c.regally292@passmail.net">nerds-and-dreamers.c.regally292@passmail.net</a>
         </p>
 
         <h3>2. Hosting</h3>
@@ -889,12 +895,11 @@
         <p>This website sets no cookies, uses no localStorage, embeds no analytics (Google Analytics, Matomo, etc.), and loads no fonts or scripts from external servers. The entire page runs locally in your browser.</p>
 
         <h3>4. External links</h3>
-        <p>This website links to external services (Luma, Meetup, Instagram, WhatsApp). Only when you actively click one of these links are you forwarded to the respective provider, and their own privacy terms apply:</p>
+        <p>This website links to external services (Luma, Meetup, Instagram). Only when you actively click one of these links are you forwarded to the respective provider, and their own privacy terms apply:</p>
         <ul>
           <li><a href="https://lu.ma/privacy" target="_blank" rel="noopener">Luma — Privacy Policy</a></li>
           <li><a href="https://www.meetup.com/privacy/" target="_blank" rel="noopener">Meetup — Privacy Policy</a></li>
           <li><a href="https://privacycenter.instagram.com/policy" target="_blank" rel="noopener">Instagram / Meta — Privacy Policy</a></li>
-          <li><a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">WhatsApp — Privacy Policy</a></li>
         </ul>
 
         <h3>5. Your rights</h3>

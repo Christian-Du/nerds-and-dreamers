@@ -1230,7 +1230,13 @@
         }
         // No parameter — randomly pick 0%, 50% or 100%
         var options = [0, 128, 255];
-        return options[Math.floor(Math.random() * options.length)];
+        var picked = options[Math.floor(Math.random() * options.length)];
+        // Write to URL immediately so it's bookmarkable and not cached
+        try {
+          var hex = ('0' + picked.toString(16)).slice(-2);
+          window.history.replaceState(null, '', window.location.pathname + '?v=' + hex);
+        } catch(e) {}
+        return picked;
       }
 
       var initial = getInitialValue();

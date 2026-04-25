@@ -567,26 +567,29 @@
     /* ── MORPH SLIDER ── */
     #morph-bar {
       position: fixed;
-      top: 12px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
       display: flex;
       align-items: center;
-      background: rgba(8, 16, 30, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px) saturate(0.8) brightness(1.1);
+      -webkit-backdrop-filter: blur(18px) saturate(0.8) brightness(1.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 40px;
-      padding: 9px 18px;
-      width: min(320px, calc(100vw - 32px));
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-      transition: background 0.6s ease, border-color 0.6s ease;
+      padding: 6px 14px;
+      width: min(280px, calc(100vw - 32px));
+      box-shadow:
+        0 2px 24px rgba(0,0,0,0.12),
+        0 1px 0 rgba(255,255,255,0.25) inset,
+        0 -1px 0 rgba(0,0,0,0.06) inset;
+      transition: background 0.6s ease, border-color 0.6s ease, backdrop-filter 0.6s ease;
     }
 
     #morph-bar .m-sym {
-      font-size: 15px;
-      width: 36px;
+      font-size: 14px;
+      width: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -594,14 +597,28 @@
       flex-shrink: 0;
       transition: color 0.4s ease;
     }
-    #morph-bar .m-sym-l { color: #7ab8cc; letter-spacing: -0.05em; }
-    #morph-bar .m-sym-r { font-size: 21px; color: #bf8040; }
+    #morph-bar .m-sym-l {
+      color: #7ab8cc;
+      letter-spacing: -0.05em;
+      text-shadow:
+        0 0 6px rgba(122,184,204,0.9),
+        0 0 14px rgba(122,184,204,0.5),
+        0 1px 2px rgba(0,0,0,0.4);
+    }
+    #morph-bar .m-sym-r {
+      font-size: 19px;
+      color: #bf8040;
+      text-shadow:
+        0 0 6px rgba(191,128,64,0.9),
+        0 0 14px rgba(191,128,64,0.5),
+        0 1px 2px rgba(0,0,0,0.4);
+    }
 
     #morph-bar input[type=range] {
       -webkit-appearance: none;
       appearance: none;
       flex: 1;
-      height: 3px;
+      height: 2px;
       background: rgba(255,255,255,0.12);
       border-radius: 2px;
       outline: none;
@@ -611,13 +628,13 @@
 
     #morph-bar input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: #fff;
       border: 2px solid #7ab8cc;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
     }
 
     /* Glass grid overlay for night greenhouse phase */
@@ -1167,9 +1184,9 @@
         root.style.setProperty('--orange-glow', 'rgba(' + p['orange'][0] + ',' + p['orange'][1] + ',' + p['orange'][2] + ',0.22)');
         root.style.setProperty('--green',       toCSS(p['green']));
 
-        // Bar background
-        bar.style.background = toCSS(p['bar-bg']);
-        bar.style.borderColor = toCSS(p['bar-border']);
+        // Bar stays as sea glass — no morphing
+        // bar.style.background = toCSS(p['bar-bg']);
+        // bar.style.borderColor = toCSS(p['bar-border']);
 
         // Thumb ring: blue → light gray → amber
         var thumbC = t < 0.5

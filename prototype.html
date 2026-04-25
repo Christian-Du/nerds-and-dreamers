@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morph C · Nacht-Gewächshaus</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #111;
+    font-family: 'Courier New', monospace;
+    padding: 20px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-height: 100vh;
+  }
+
+  .slider-bar {
+    display: flex;
+    align-items: center;
+    background: #0f0f0f;
+    border: 1px solid #2a2a2a;
+    border-radius: 40px;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 480px;
+    position: sticky;
+    top: 16px;
+    z-index: 100;
+  }
+
+  .sym-left {
+    font-size: 16px;
+    letter-spacing: -0.05em;
+    color: #7ab8cc;
+    width: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .sym-right {
+    font-size: 26px;
+    color: #bf8040;
+    width: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 3px;
+    background: #2a2a2a;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    margin: 0 8px;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #7ab8cc;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    transition: transform 0.15s;
+  }
+
+  input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+
+  .card {
+    border-radius: 10px;
+    padding: 28px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 480px;
+    min-height: 460px;
+  }
+
+  .c-eyebrow { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; }
+  .c-title   { font-size: 24px; font-weight: bold; line-height: 1.15; }
+  .c-divider { font-size: 9px; letter-spacing: 0.1em; }
+  .c-body    { font-size: 12px; line-height: 1.75; }
+  .c-tag     { display: inline-block; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 10px; border: 1px solid; width: fit-content; }
+  .c-section { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; }
+  .c-grid    { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .c-item    { padding: 10px 12px; border: 1px solid; }
+  .c-item-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+  .c-item-val   { font-size: 11px; }
+</style>
+
+<style id="thumb-dyn">
+  input[type=range]::-webkit-slider-thumb { border-color: #7ab8cc; }
+</style>
+</head>
+<body>
+
+<div class="slider-bar">
+  <span class="sym-left">&gt;_</span>
+  <input type="range" min="0" max="255" value="0" id="slider">
+  <span class="sym-right">✒</span>
+</div>
+
+<div class="card" id="card">
+  <div class="c-eyebrow" id="eyebrow">// Berlin · Est. 2026</div>
+  <div class="c-title"   id="title">Nerds,<br>Creatives &amp;<br>Dreamers</div>
+  <div class="c-divider" id="divider">// ————————————————</div>
+  <div class="c-body"    id="body">Where code meets canvas. The Berlin meetup where coders, artists, and everyone in between actually end up in the same room.</div>
+  <div class="c-tag"     id="tag">Berlin · Community</div>
+  <div class="c-section" id="section">// 01 — what's next</div>
+  <div class="c-grid">
+    <div class="c-item" id="item1">
+      <div class="c-item-label" id="il1">Edition</div>
+      <div class="c-item-val"   id="iv1">02 · coming soon</div>
+    </div>
+    <div class="c-item" id="item2">
+      <div class="c-item-label" id="il2">Status</div>
+      <div class="c-item-val"   id="iv2">tentative_</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const slider = document.getElementById('slider');
+  const thumbDyn = document.getElementById('thumb-dyn');
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function lerpRGB(c1, c2, t) {
+    return [
+      Math.round(lerp(c1[0], c2[0], t)),
+      Math.round(lerp(c1[1], c2[1], t)),
+      Math.round(lerp(c1[2], c2[2], t))
+    ];
+  }
+  function rgb(c) { return `rgb(${c[0]},${c[1]},${c[2]})`; }
+  function clamp01(t) { return Math.max(0, Math.min(1, t)); }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  const T = {
+    bg:         [10, 14, 26],
+    border:     [26, 34, 53],
+    title:      [232, 234, 240],
+    eyebrow:    [42, 74, 106],
+    body:       [90, 112, 144],
+    tag:        [42, 80, 112],
+    tagBg:      [6, 10, 18],
+    item:       [6, 10, 18],
+    itemBorder: [26, 42, 58],
+    itemLabel:  [42, 74, 106],
+    itemVal:    [112, 144, 176],
+    divider:    [30, 48, 80],
+  };
+
+  const N = { // Night greenhouse
+    bg:         [8, 18, 12],
+    border:     [20, 52, 32],
+    title:      [180, 220, 190],
+    eyebrow:    [40, 100, 60],
+    body:       [60, 120, 80],
+    tag:        [40, 100, 60],
+    tagBg:      [4, 12, 8],
+    item:       [4, 14, 8],
+    itemBorder: [20, 52, 32],
+    itemLabel:  [40, 100, 60],
+    itemVal:    [120, 190, 140],
+    divider:    [24, 64, 40],
+  };
+
+  const G = {
+    bg:         [242, 237, 228],
+    border:     [200, 184, 152],
+    title:      [42, 32, 24],
+    eyebrow:    [138, 122, 90],
+    body:       [106, 90, 58],
+    tag:        [122, 96, 64],
+    tagBg:      [255, 255, 255],
+    item:       [255, 255, 255],
+    itemBorder: [200, 184, 152],
+    itemLabel:  [154, 128, 96],
+    itemVal:    [74, 58, 32],
+    divider:    [176, 152, 106],
+  };
+
+  function palette(t) {
+    // T → N → G, N peaks at t=0.45
+    const stops = [
+      { t: 0,    p: T },
+      { t: 0.45, p: N },
+      { t: 1,    p: G },
+    ];
+    for (let i = 0; i < stops.length - 1; i++) {
+      if (t <= stops[i+1].t) {
+        const local = easeInOut((t - stops[i].t) / (stops[i+1].t - stops[i].t));
+        const result = {};
+        Object.keys(T).forEach(k => {
+          result[k] = lerpRGB(stops[i].p[k], stops[i+1].p[k], local);
+        });
+        return result;
+      }
+    }
+    return G;
+  }
+
+  function update(val) {
+    const t = val / 255;
+    const p = palette(t);
+    const card = document.getElementById('card');
+
+    // Thumb ring
+    const thumbC = t < 0.5
+      ? lerpRGB([122,184,204], [208,208,208], t * 2)
+      : lerpRGB([208,208,208], [191,128,64], (t - 0.5) * 2);
+    thumbDyn.textContent = `input[type=range]::-webkit-slider-thumb { border-color: ${rgb(thumbC)}; }`;
+
+    // Background + glass grid
+    card.style.background = rgb(p.bg);
+    card.style.border = `1px solid ${rgb(p.border)}`;
+
+    const gridO = t < 0.45
+      ? (t / 0.45) * 0.18
+      : Math.max(0, ((0.75 - t) / 0.30) * 0.10);
+
+    card.style.backgroundImage = gridO > 0.005
+      ? `linear-gradient(rgba(80,200,120,${gridO.toFixed(3)}) 1px, transparent 1px),
+         linear-gradient(90deg, rgba(80,200,120,${gridO.toFixed(3)}) 1px, transparent 1px)`
+      : 'none';
+    card.style.backgroundSize = '28px 28px';
+
+    // Font
+    const isSerif = t >= 0.65;
+    const font = isSerif ? 'Georgia, Times New Roman, serif' : 'Courier New, monospace';
+
+    // Title switches earlier at 0.55
+    document.getElementById('title').style.fontFamily =
+      t >= 0.55 ? 'Georgia, Times New Roman, serif' : 'Courier New, monospace';
+    document.getElementById('title').style.color = rgb(p.title);
+
+    document.getElementById('eyebrow').style.color = rgb(p.eyebrow);
+    document.getElementById('eyebrow').style.fontFamily = font;
+
+    document.getElementById('divider').style.color = rgb(p.divider);
+    document.getElementById('divider').style.fontFamily = font;
+    document.getElementById('divider').textContent =
+      t < 0.65 ? '// ————————————————' : '── ✦ ──────────────';
+
+    document.getElementById('body').style.color = rgb(p.body);
+    document.getElementById('body').style.fontFamily = font;
+    document.getElementById('body').style.fontStyle = isSerif ? 'italic' : 'normal';
+
+    document.getElementById('tag').style.color = rgb(p.tag);
+    document.getElementById('tag').style.borderColor = rgb(p.border);
+    document.getElementById('tag').style.background =
+      `rgba(${p.tagBg[0]},${p.tagBg[1]},${p.tagBg[2]},0.5)`;
+    document.getElementById('tag').style.fontFamily = font;
+    document.getElementById('tag').style.borderRadius = isSerif ? '20px' : '2px';
+
+    document.getElementById('section').style.color = rgb(p.eyebrow);
+    document.getElementById('section').style.fontFamily = font;
+    document.getElementById('section').textContent =
+      t < 0.65 ? "// 01 — what's next" : 'I. What\'s Next';
+
+    ['item1','item2'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.background = `rgba(${p.item[0]},${p.item[1]},${p.item[2]},0.5)`;
+      el.style.borderColor = rgb(p.itemBorder);
+      el.style.borderRadius = isSerif ? '6px' : '3px';
+    });
+
+    ['il1','il2'].forEach(id => {
+      document.getElementById(id).style.color = rgb(p.itemLabel);
+      document.getElementById(id).style.fontFamily = font;
+      document.getElementById(id).style.fontStyle = isSerif ? 'italic' : 'normal';
+    });
+
+    ['iv1','iv2'].forEach(id => {
+      document.getElementById(id).style.color = rgb(p.itemVal);
+      document.getElementById(id).style.fontFamily = font;
+    });
+
+    document.getElementById('iv2').textContent =
+      t < 0.65 ? 'tentative_' : 'Tentative';
+  }
+
+  slider.addEventListener('input', () => update(parseInt(slider.value)));
+  update(0);
+</script>
+
+</body>
+</html>
